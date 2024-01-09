@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Button } from 'react-native';
 
-const FurnitureItem = ({ id, title, price, bannerImg, cat, onSelectArticle, onAddToFavorites }) => {  
+const FurnitureItem = ({ id, title, price, bannerImg, furnitureCategories, onSelectArticle, onAddToFavorites }) => {  //waarom al deze woorden ipv route, navigation zoals bij de andere pagina's? 
   return (
     <TouchableOpacity activeOpacity={0.5} onPress={() => onSelectArticle(id)}>
       <View style={styles.newsItem}>
@@ -12,13 +12,12 @@ const FurnitureItem = ({ id, title, price, bannerImg, cat, onSelectArticle, onAd
           }}
         />
         <Text style={styles.title}>{title}</Text>
-        {/* Assuming you have fulltext, price, and cat as props */}
-        <Text style={styles.fulltext}>{/* fulltext prop here */}</Text>
         <Text style={styles.price}>€{price}</Text>
-        <Text style={styles.cat}>{cat}</Text>
-        <Button
+        <Text style={styles.price}>{furnitureCategories}</Text>
+
+        <Button 
           title="Add to Favorites"
-          onPress={() => onAddToFavorites({ id, title, price, bannerImg, cat })}
+          onPress={() => onAddToFavorites({ id, title, price, bannerImg })}
         />
       </View>
     </TouchableOpacity>
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
-    color: "#D24335",
+    color: "#264731",
     fontSize: 16,
     marginTop: 12,
     marginBottom: 12,

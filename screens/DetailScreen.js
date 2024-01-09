@@ -5,7 +5,10 @@ import DetailArticle from '../components/DetailArticle';
 
 const DetailScreen = ({ route, navigation }) => {
   const { id } = route.params;
+  
   console.log('Received articleId:', id);
+
+
   return (
     <View style={styles.screen}>
       <DetailArticle articleId={id}/>

@@ -1,53 +1,107 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, TextInput, Image, Platform, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, View, Platform, Button, StatusBar } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import Icon from 'react-native-ico-material-design';
 
+
+const iconSize = 30;
 
 const ContactScreen = ({ navigation }) => {
+  state = {
+    screenText: 'press a button'
+  }
+
+  changeText = (text) => {
+    console.log(text + 'had been pressed')
+    this.setState({
+      screenText: text
+    })
+  }
+
+  const [date, setDate] = useState(new Date())
+  const [mode, setMode] = useState('date'); //om te veranderen tussen time mode and date mode
+  const [show, setShow] = useState(false); //show the box or not
+  const [text, setText] = useState('Choose date');
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+
+    let tempDate = new Date(currentDate);
+    let fDate = tempDate.getDate()+ '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
+    let fTime = 'Hours:' + tempDate.getHours() + ' | Minutes: ' + tempDate.getMinutes();
+    setText(fDate + '\n' + fTime)
+
+  }
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  }
+
 return(
 <View style={styles.screen}> 
     <View style={styles.bigContainer}>
-        <Text style={styles.title}>Openingsuren</Text>
+        <Text style={styles.title}>Openinghours</Text>
         <View style={styles.container}>
-            <Text>Maandag: 9u-17u</Text>
-        </View>
-        <View style={styles.container}>
-            <Text>Dinsdag: 9u-17u</Text>
+            <Text>Monday: 9 am - 5pm</Text>
         </View>
         <View style={styles.container}>
-            <Text>Woensdag: 9u-13u</Text>
+            <Text>Tuesday: 9 am - 5pm</Text>
         </View>
         <View style={styles.container}>
-            <Text>Donderdag: 9u-17u</Text>
+            <Text>Wednesday: 9 am - 5pm</Text>
         </View>
         <View style={styles.container}>
-            <Text>Vrijdag: 9u-17u</Text>
+            <Text>THursday: 9 am - 5pm</Text>
         </View>
         <View style={styles.container}>
-            <Text>Zaterdag: 12u-17u</Text>
+            <Text>Friday: 9 am - 5pm</Text>
         </View>
         <View style={styles.container}>
-            <Text>Zondag: Gesloten</Text>
+            <Text>Saturday: 10 am - 5pm</Text>
         </View>
+        <View style={styles.container}>
+            <Text>Sunday: Closed</Text>
         </View>
+    </View>
+
+
+<View style={styles.calender}>
+  <Text style={styles.text}>Book a consultation:</Text>
+
+  <Text style={styles.text}>{text}</Text>
+  
+  <View style={styles.date}>
+  <View style={{margin:20}}>
+  <Button title='DatePicker' onPress={() => showMode('date')}></Button>
+  </View>
+  <View style={{margin:20}}>
+  <Button title='TimePicker' onPress={() => showMode('time')}></Button>
+  </View>
+  </View>
+
+  {show && (
+    <DateTimePicker
+    testID='dateTimePicker'
+    value={date}
+    mode={mode}
+    is24Hour={true}
+    display='default'
+    onChange={onChange}
+    />)}
+
+
+  <StatusBar style="auto"/>
+</View>
 
 <View style={styles.nav}>
-<Button 
-  title="Home"
-  onPress={() => navigation.navigate('Home')}
-/>
-<Button
-  title="Furniture"
-  onPress={() => navigation.navigate('Furniture')}
-/>
-<Button
-  title="Favorites"
-  onPress={() => navigation.navigate('Favorites')}
-/>
-<Button
-  title="Contact"
-  onPress={() => navigation.navigate('Contact')}
-/>
-</View>
+      <Icon name="home-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Home')} />
+      <Icon name="filter-results-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Furniture')} />
+      <Icon name="favorite-heart-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Favorites')} />
+      <Icon name="phone-call-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Contact')} />
+    </View>
 </View>
 );
 
@@ -55,9 +109,14 @@ return(
 
 
 const styles = StyleSheet.create({
-    title: {
+   screen: {
+    flex: 1,
+    justifyContent: 'space-evenly'
+   } ,
+  
+  title: {
       fontSize: 24,
-      color: "#D24335",
+      color: "#264731",
       fontWeight: "bold",
       textTransform: "uppercase",
       marginBottom: 8,
@@ -71,8 +130,9 @@ const styles = StyleSheet.create({
   
   container: {
     borderWidth: 1,
-    borderColor: "#D24335",
-    padding: 8,
+    borderColor: "#264731",
+    borderRadius: 10,
+    padding: 10,
     marginVertical: 4,
   },
 
@@ -84,6 +144,34 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#FFF",
   },
+
+  text: {
+    marginLeft: 30,
+    fontWeight:'bold', 
+    fontSize: 20, 
+    color: "#264731",
+  },
+
+  date: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  }, 
+
+  nav: {
+    flexDirection: 'row',
+    backgroundColor: '#a2bdab',
+    width: '100%',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    borderRadius: 40,
+    height: 50,
+  }, 
+
+  IconBehave: {
+    flex: 1,
+    padding: 14, 
+  }
   
   });
   
