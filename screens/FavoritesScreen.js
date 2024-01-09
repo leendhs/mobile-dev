@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList, Button, Pressable } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Button, Pressable, TouchableOpacity } from 'react-native';
 import FurnitureItem from '../components/FurnitureItem';
 import Icon from 'react-native-ico-material-design';
 
@@ -8,24 +8,15 @@ const iconSize = 30;
 
 const FavoritesScreen = ({ route, navigation }) => {
 
-    state = {
-    screenText: 'press a button'
-  }
-
-  changeText = (text) => {
-    console.log(text + 'had been pressed')
-    this.setState({
-      screenText: text
-    })
-  }
-
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
-    // Update favorites when the screen is focused
+    // Update favorieten
+    //callback functie wordt uitgevoerd wanneer het scherm actief wordt 
+    //unsubscribe wordt gebruikt om event listener uit te schakelen als het scherm niet meer actief is
     const unsubscribe = navigation.addListener('focus', () => {
-      if (route.params?.favorites) {
-        setFavorites(route.params.favorites);
+      if (route.params?.favorites) { //is er een route.params en bevat het favorites? Dan wordt de if uitgevoerd 
+        setFavorites(route.params.favorites); //setFav wordt gebruikt om fav state bij te werken met de nieuwe favs die zijn doorgegeven via route.params.fav
       }
     });
 
@@ -34,10 +25,10 @@ const FavoritesScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.screen}> 
-      <Text style={styles.title}>Favorites</Text>
+      <Text style={styles.title}>Cart</Text>
       <FlatList
         style={styles.list}
-        data={favorites}
+        data={favorites} 
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <FurnitureItem
@@ -45,13 +36,16 @@ const FavoritesScreen = ({ route, navigation }) => {
             title={item.title}
             price={item.price}
             bannerImg={item.bannerImg}
-            // cat={item.cat}
             onSelectArticle={(selectedId) => {
               navigation.navigate('Detail', { id: selectedId });
             }}
-          />
+          />      
         )}
       /> 
+
+    <TouchableOpacity style={styles.addToCartText}>
+          <Text style={styles.text}>Add to Cart</Text>
+    </TouchableOpacity>
 
     <View style={styles.nav}>
       <Icon name="home-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Home')} />
@@ -112,8 +106,25 @@ const styles = StyleSheet.create({
   IconBehave: {
     flex: 1,
     padding: 14, 
+  }, 
+
+  addToCartText: {
+    marginTop: 32,
+    marginBottom: 32,
+    backgroundColor: '#264731',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+
+  text: {
+    color: '#FFF',
+    textAlign: 'center',
+    fontSize: 20,
   }
 });
 
 
 export default FavoritesScreen;
+
+

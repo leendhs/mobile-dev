@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, Platform, TouchableOpacity } from 'react-native';
 
 
 const DetailArticle = ({ articleId }) => {
@@ -43,15 +43,17 @@ const DetailArticle = ({ articleId }) => {
       <Image
         style={styles.image}
         source={{
-          uri: article.bannerImg //waarom uri ipv url? 
+          uri: article.bannerImg
         }}
       />
       <View style={styles.wrapper}>
         <Text style={styles.title}>{article.title}</Text>
-        <Text style={styles.body}>€{article.price}</Text>
-        <Text style={styles.body}>{article.rating}/5</Text>
+        <Text style={styles.price}>Price: €{article.price}</Text>
+        <Text style={styles.body}>Rating: {article.rating}/5</Text>
         <Text style={styles.body}>{article.fulltext}</Text>
-        
+        <TouchableOpacity style={styles.addToCartText} onPress={() => onAddToFavorites({ id, title, price, bannerImg })}>
+          <Text style={styles.text}>Add to Cart</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView >
   );
@@ -72,7 +74,28 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   body: {
-    lineHeight: 24
+    lineHeight: 24,
+    fontSize: 16,
+    marginBottom: 10,
+  }, 
+
+  price: {
+    fontSize: 24,
+    marginBottom: 20,
+  }, 
+
+  addToCartText: {
+    marginTop: 32,
+    backgroundColor: '#264731',
+    borderRadius: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+
+  text: {
+    color: '#FFF',
+    textAlign: 'center',
+    fontSize: 20,
   }
 });
 

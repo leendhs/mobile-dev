@@ -4,10 +4,9 @@ import { StyleSheet, View, Button, Article, FlatList } from 'react-native';
 import DetailArticle from '../components/DetailArticle';
 
 const DetailScreen = ({ route, navigation }) => {
-  const { id } = route.params;
+  const { id } = route.params; 
   
   console.log('Received articleId:', id);
-
 
   return (
     <View style={styles.screen}>
@@ -28,3 +27,4 @@ const styles = StyleSheet.create({
 });
 
 export default DetailScreen;
+

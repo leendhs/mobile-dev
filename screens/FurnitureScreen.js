@@ -2,34 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
 import FurnitureItem from '../components/FurnitureItem';
 import Icon from 'react-native-ico-material-design';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const iconSize = 30;
 
-
 const FurnitureScreen = ({ route, navigation }) => {
-  state = {
-    screenText: 'press a button'
-  }
-
-  changeText = (text) => {
-    console.log(text + 'had been pressed')
-    this.setState({
-      screenText: text
-    })
-  }
-  const { id } = route.params || {}; //waarom dit? 
+  const { id } = route.params || {}; //als route.params niet bestaat, wordt een leeg object gebruikt om fouten ver voorkomen
   const [articles, setArticle] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  const [isSorted, setIsSorted] = useState(false); // Default sorting order is off
+  const [isSorted, setIsSorted] = useState(false); // Default sorting order staat uit
 
 
-  // Function to toggle the sorting order
+  // als sort bij price wordt aangeduid, worden de artikelen gesorteerd obv prijs
   const toggleSortOrder = () => {
     setIsSorted(!isSorted);
     };
 
-  // Sort the articles based on the price and sortOrder
-  const sortedArticles = isSorted
+  // nieuwe array sortedArticles. Als isSroted true is, worden de artikelen op prijs gesorteerd
+  //parseFloat -> prijzen worden gezien als getallen  
+
+  const sortedArticles = isSorted //controleert op isSorted true is. True = eerste deel wordt uitgevoerd, false = tweede deel wordt uitgevoerd 
   ? articles.slice().sort((a, b) => parseFloat(a.price) - parseFloat(b.price))
   : articles;
 
@@ -60,7 +52,7 @@ const FurnitureScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     console.log('Favorites:', favorites);
-  }, [favorites]);
+  }, [favorites]); 
 
   return (
     <View style={styles.screen}>
@@ -70,40 +62,38 @@ const FurnitureScreen = ({ route, navigation }) => {
         onPress={toggleSortOrder} />
 
       <FlatList //waarom flatlist? 
-  style={styles.list}
-  data={sortedArticles} 
-  keyExtractor={(item) => item.id.toString()} //van waar komt id? 
-  renderItem={({ item }) => {
-    let url;
+        style={styles.list}
+        data={sortedArticles} 
+        keyExtractor={(item) => item.id.toString()} 
+        renderItem={({ item }) => {
+          let url;
+          if (Platform.OS == 'android') {
+            item.bannerImg = item.bannerImg.replace('cms-API-start', '10.0.2.2:51242');
+          }
 
-    if (Platform.OS == 'android') {
-      item.bannerImg = item.bannerImg.replace('cms-API-start', '10.0.2.2:51242');
-    }
-
-    return (
-      <FurnitureItem
-        id={item.id}
-        title={item.title}
-        price={item.price}
-        bannerImg={item.bannerImg}
-
-        navigation={navigation}
-        onSelectArticle={(selectedId) => {
-          console.log('Selected Furniture Item ID:', selectedId);
-          navigation.navigate('Detail', { id: selectedId });
-        }}
-        onAddToFavorites={(item) => {
-          setFavorites((prevFavorites) => {
-            const updatedFavorites = [...prevFavorites, item];
-            navigation.navigate('Favorites', { favorites: updatedFavorites });
-            return updatedFavorites;
-          });
+          return (
+            <FurnitureItem
+              id={item.id}
+              title={item.title}
+              price={item.price}
+              bannerImg={item.bannerImg}
+              navigation={navigation}
+              onSelectArticle={(selectedId) => {
+                console.log('Selected Furniture Item ID:', selectedId);
+                navigation.navigate('Detail', { id: selectedId });
+              }}
+              onAddToFavorites={(item) => {
+                setFavorites((prevFavorites) => {
+                  const updatedFavorites = [...prevFavorites, item];
+                  navigation.navigate('Favorites', { favorites: updatedFavorites });
+                  return updatedFavorites;
+                });
+              }}
+            />
+          );
         }}
       />
-    );
-  }}
-/>
-<View style={styles.nav}>
+    <View style={styles.nav}>
       <Icon name="home-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Home')} />
       <Icon name="filter-results-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Furniture')} />
       <Icon name="favorite-heart-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Favorites')} />

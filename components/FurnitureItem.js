@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Button } from 'react-native';
 
-const FurnitureItem = ({ id, title, price, bannerImg, furnitureCategories, onSelectArticle, onAddToFavorites }) => {  //waarom al deze woorden ipv route, navigation zoals bij de andere pagina's? 
+const FurnitureItem = ({ id, title, price, bannerImg, onSelectArticle, onAddToFavorites }) => {  
   return (
     <TouchableOpacity activeOpacity={0.5} onPress={() => onSelectArticle(id)}>
-      <View style={styles.newsItem}>
+      <View style={styles.furnItem}>
         <Image
           style={styles.banner}
           source={{
@@ -13,19 +13,17 @@ const FurnitureItem = ({ id, title, price, bannerImg, furnitureCategories, onSel
         />
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.price}>€{price}</Text>
-        <Text style={styles.price}>{furnitureCategories}</Text>
 
-        <Button 
-          title="Add to Favorites"
-          onPress={() => onAddToFavorites({ id, title, price, bannerImg })}
-        />
+        <TouchableOpacity onPress={() => onAddToFavorites({ id, title, price, bannerImg })}>
+          <Text style={styles.addToCartText}>Add to Cart</Text>
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  newsItem: {
+  furnItem: {
     padding: 12,
     marginVertical: 8,
     backgroundColor: "#fff",
@@ -51,7 +49,14 @@ const styles = StyleSheet.create({
   },
   intro: {
     marginBottom: 8
-  }
+  }, 
+
+  addToCartText: {
+    color: '#264731',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 5,
+  },
 });
 export default FurnitureItem;
 

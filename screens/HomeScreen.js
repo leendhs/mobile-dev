@@ -6,20 +6,9 @@ import Icon from 'react-native-ico-material-design';
 const iconSize = 30;
 
 const HomeScreen = ({ navigation }) => {
-  state = {
-    screenText: 'press a button'
-  }
-
-  changeText = (text) => {
-    console.log(text + 'had been pressed')
-    this.setState({
-      screenText: text
-    })
-  }
-
   return (
-
-    <ImageBackground source={require('../assets/img/home.avif')} style={styles.backgroundImage} resizeMode="cover" opacity={0.8}>
+      //foto achtergrond
+    <ImageBackground source={require('../assets/img/home.avif')} style={styles.backgroundImage} resizeMode="cover" opacity={0.8}> 
       <View style={styles.titleOverlayContainer}>
         <Text style={styles.titleOverlay}>Welcome to Ekia</Text>
         <TouchableOpacity
@@ -29,17 +18,13 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.buttonText}>Furniture</Text>
         </TouchableOpacity>
         <View style={styles.nav}>
-      <Icon name="home-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Home')} />
-      <Icon name="filter-results-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Furniture')} />
-      <Icon name="favorite-heart-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Favorites')} />
-      <Icon name="phone-call-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Contact')} />
-      </View>
+          <Icon name="home-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Home')} />
+          <Icon name="filter-results-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Furniture')} />
+          <Icon name="favorite-heart-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Favorites')} />
+          <Icon name="phone-call-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Contact')} />
+        </View>
       </View>
     </ImageBackground>
-
-    
-
-
   );
 };
 
@@ -59,7 +44,7 @@ const styles = StyleSheet.create({
 
   titleOverlay: {
     fontSize: 28,
-    color: '#FFF', // You can set the color to match your image background
+    color: '#FFF', 
     fontWeight: 'bold',
     textTransform: 'uppercase',
     marginBottom: 16,

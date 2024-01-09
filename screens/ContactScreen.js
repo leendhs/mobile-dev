@@ -7,29 +7,18 @@ import Icon from 'react-native-ico-material-design';
 const iconSize = 30;
 
 const ContactScreen = ({ navigation }) => {
-  state = {
-    screenText: 'press a button'
-  }
-
-  changeText = (text) => {
-    console.log(text + 'had been pressed')
-    this.setState({
-      screenText: text
-    })
-  }
-
   const [date, setDate] = useState(new Date())
   const [mode, setMode] = useState('date'); //om te veranderen tussen time mode and date mode
-  const [show, setShow] = useState(false); //show the box or not
+  const [show, setShow] = useState(false); //toon de box of niet
   const [text, setText] = useState('Choose date');
 
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
+    const currentDate = selectedDate || date; //als er geen geselecteerde datum is, is de default de current date 
     setShow(Platform.OS === 'ios');
-    setDate(currentDate);
+    setDate(currentDate); // update de date naar de geselecteerde date 
 
     let tempDate = new Date(currentDate);
-    let fDate = tempDate.getDate()+ '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
+    let fDate = tempDate.getDate()+ '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear(); //januari is 0 dus +1 
     let fTime = 'Hours:' + tempDate.getHours() + ' | Minutes: ' + tempDate.getMinutes();
     setText(fDate + '\n' + fTime)
 
@@ -37,7 +26,7 @@ const ContactScreen = ({ navigation }) => {
 
   const showMode = (currentMode) => {
     setShow(true);
-    setMode(currentMode);
+    setMode(currentMode); //toon wat de user heeft aangeduid (time of date)
   }
 
 return(
@@ -82,7 +71,7 @@ return(
   </View>
   </View>
 
-  {show && (
+  {show && ( //datetimepicker wordt enkel gerenderd als show true is
     <DateTimePicker
     testID='dateTimePicker'
     value={date}
