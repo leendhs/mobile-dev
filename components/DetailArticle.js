@@ -51,11 +51,13 @@ const DetailArticle = ({ articleId }) => {
         <Text style={styles.price}>Price: €{article.price}</Text>
         <Text style={styles.body}>Rating: {article.rating}/5</Text>
         <Text style={styles.body}>{article.fulltext}</Text>
-        <TouchableOpacity style={styles.addToCartText} onPress={() => onAddToFavorites({ id, title, price, bannerImg })}>
+        <TouchableOpacity style={styles.addToCartText}>
           <Text style={styles.text}>Add to Cart</Text>
         </TouchableOpacity>
       </View>
+
     </ScrollView >
+    
   );
 }
 

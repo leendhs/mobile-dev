@@ -44,13 +44,13 @@ const FavoritesScreen = ({ route, navigation }) => {
       /> 
 
     <TouchableOpacity style={styles.addToCartText}>
-          <Text style={styles.text}>Add to Cart</Text>
+          <Text style={styles.text}>Pay</Text>
     </TouchableOpacity>
 
     <View style={styles.nav}>
       <Icon name="home-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Home')} />
       <Icon name="filter-results-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Furniture')} />
-      <Icon name="favorite-heart-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Favorites')} />
+      <Icon name="shopping-cart" size={iconSize} color="#264731" onPress={() => navigation.navigate('Favorites')} />
       <Icon name="phone-call-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Contact')} />
     </View>
   </View>
