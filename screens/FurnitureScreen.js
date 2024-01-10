@@ -85,7 +85,7 @@ const FurnitureScreen = ({ route, navigation }) => {
               onAddToFavorites={(item) => {
                 setFavorites((prevFavorites) => {
                   const updatedFavorites = [...prevFavorites, item];
-                  navigation.navigate('Favorites', { favorites: updatedFavorites });
+                  navigation.navigate('Cart', { favorites: updatedFavorites });
                   return updatedFavorites;
                 });
               }}
@@ -96,7 +96,7 @@ const FurnitureScreen = ({ route, navigation }) => {
     <View style={styles.nav}>
       <Icon name="home-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Home')} />
       <Icon name="filter-results-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Furniture')} />
-      <Icon name="shopping-cart" size={iconSize} color="#264731" onPress={() => navigation.navigate('Favorites')} />
+      <Icon name="shopping-cart" size={iconSize} color="#264731" onPress={() => navigation.navigate('Cart')} />
       <Icon name="phone-call-button" size={iconSize} color="#264731" onPress={() => navigation.navigate('Contact')} />
       </View>
     </View>

@@ -18,7 +18,7 @@ export default function App() {
           <Stack.Screen name="Furniture" component={FurnitureScreen}/>
           <Stack.Screen name="Detail" component={DetailScreen} />
           <Stack.Screen name="Contact" component={ContactScreen} />
-          <Stack.Screen name="Favorites" component={FavoritesScreen} />
+          <Stack.Screen name="Cart" component={FavoritesScreen} />
         </Stack.Navigator>
       </NavigationContainer> 
     );
